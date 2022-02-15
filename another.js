@@ -38,3 +38,7 @@ for(var i=0;i<items.length;i++)
     items[i].style.fontweight='bold';
     items[i].style.color='#f4f4f4';
 }
+var li=document.getElementsByClassName('items');
+console.log(li);
+var li=document.getElementsByTagName('li');
+console.log(li);
