@@ -1,6 +1,6 @@
 /*console.log(document.domain);
 console.log(document.URL);
-console.log(document);*/
+console.log(document);
 console.log(document.title);
 document.title=123;
 console.log(document.title);
@@ -19,5 +19,22 @@ var headertitle=document.getElementById('header-title');
 headerTitle.style.borderBottom='solid 3px #000';
 var title=document.getElementsByClassName('Items');
 title.style.fontweight='bold';
-title.style.color='green';
+title.style.color='green';*/
 
+var items=document.getElementsByClassName('list-group-items');
+console.log(items);
+console.log(items[1]);
+items[1].textContent="Hello 2";
+//items[1].style.fontweight='bold';
+//items[1].style.backgroundColor='yellow';
+//for(var i=0;i<items.length;i++)
+
+//{
+  //  items[1].style.backgroundColor='#f4f4f4';
+//}
+items[2].style.backgroundColor='green';
+for(var i=0;i<items.length;i++)
+{
+    items[i].style.fontweight='bold';
+    items[i].style.color='#f4f4f4';
+}
