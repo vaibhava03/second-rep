@@ -14,7 +14,12 @@ function addItem(e)
   var newItem = document.getElementById('item').value;
   var li = document.createElement('li');
   li.className = 'list-group-item';
+  var newDes=document.getElementById('item1').value;
+  var description=document.createElement('p');
+  description.className='list-description';
   li.appendChild(document.createTextNode(newItem));
+  description.appendChild(document.createTextNode(newDes));
+  li.appendChild(description);
   var deleteBtn = document.createElement('button');
   deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
   deleteBtn.appendChild(document.createTextNode('X'));
@@ -24,6 +29,7 @@ function addItem(e)
   editBtn.className='editButton';
   editBtn.appendChild(document.createTextNode('Edit'));
   li.appendChild(editBtn);
+  
   itemList.appendChild(li);
 }
 
@@ -43,16 +49,35 @@ function removeItem(e)
 
 function filterItems(e){
  
-  var text = e.target.value.toLowerCase();
-  
-  var items = itemList.getElementsByTagName('li');
+    var text = e.target.value.toLowerCase();
+//     var items=itemList.getElementsByTagName('li');
+//     Array.from(items).forEach(function(item){
+//     var itemName = item.firstChild.textContent;
+//    if(itemName.toLowerCase().indexOf(text) != -1)
+//     {
+//     item.style.display='block';
+//       } else {
+//      item.style.display = 'none';
+//       }
+//     });
+//}
+    var itemDesc=itemList.getElementsByTagName('p');
+    
+    
+    Array.from(itemDesc).forEach(function(item)
+    {
+        var itemName=item.firstChild.textContent;
+        
+        //var itemL=document.getElementsByTagName('li')(indexOf(item));
 
-  Array.from(items).forEach(function(item){
-    var itemName = item.firstChild.textContent;
-    if(itemName.toLowerCase().indexOf(text) != -1){
-      item.style.display = 'block';
-    } else {
-      item.style.display = 'none';
-    }
-  });
-}
+        if(itemName.toLowerCase().indexOf(text)!= -1)
+        {
+
+            item.style.display='block';
+          
+        }
+        else {  item.style.display='none'; 
+         }
+    });
+   
+  }
