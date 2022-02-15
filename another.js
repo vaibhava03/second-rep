@@ -21,10 +21,10 @@ var title=document.getElementsByClassName('Items');
 title.style.fontweight='bold';
 title.style.color='green';*/
 
-var items=document.getElementsByClassName('list-group-items');
+/*var items=document.getElementsByClassName('list-group-items');
 console.log(items);
 console.log(items[1]);
-items[1].textContent="Hello 2";
+items[1].textContent="Hello 2";*/
 //items[1].style.fontweight='bold';
 //items[1].style.backgroundColor='yellow';
 //for(var i=0;i<items.length;i++)
@@ -32,7 +32,7 @@ items[1].textContent="Hello 2";
 //{
   //  items[1].style.backgroundColor='#f4f4f4';
 //}
-items[2].style.backgroundColor='green';
+/*items[2].style.backgroundColor='green';
 for(var i=0;i<items.length;i++)
 {
     items[i].style.fontweight='bold';
@@ -41,4 +41,30 @@ for(var i=0;i<items.length;i++)
 var li=document.getElementsByClassName('items');
 console.log(li);
 var li=document.getElementsByTagName('li');
-console.log(li);
+console.log(li);*/
+
+/*var header =document.querySelector('#main-header');
+hader.style.borderBottom='solid 4px #ccc';
+var input=document.querySelector('input');
+input.value='Hello World';
+var submit=document.querySelector('input[type='submit]');
+submit.value='SEND';*/
+var item=document.querySelector('.list.group.item');
+item.style.color='red';
+
+//var lastItem=document.querySelector('.list.group.item:last-child');
+//lastItem.style.color='blue;
+
+var secondItem=document.querySelector('.list-group-item:nth-child(2)');
+secondItem.style.backgroundColor='green';
+var thirdItem=documeny.querySelector('.list-group-item:nth-child(3)');
+thirdItem.style.display='none';
+var listGroupItems=document.querySelectorAll('.list-group-items');
+console.log(listGroupItem);
+listGroupItem[1].style.color='green';
+var odd=document.querySelectorAll('li:nth-child(odd)');
+for(var i=0;i<odd.length;i++)
+{
+  odd[i].style.backgroundColor='green';
+}
+
