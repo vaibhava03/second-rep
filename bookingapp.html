@@ -29,14 +29,8 @@
      </ul>
      <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.0/axios.min.js'></script>
 <script >
-  const myForm = document.getElementById("Form");
+ const myForm = document.getElementById("Form");
 
-// Object.keys(localStorage).forEach((key) => {
-//   stringifiedDetailsOfPeople = localStorage.getItem(key);
-//   detailsOfPeople = JSON.parse(stringifiedDetailsOfPeople);
-//   addElement(detailsOfPeople);
-//   });
-  
   
 myForm.addEventListener('submit',onSubmit);
 function onSubmit(e)
@@ -61,11 +55,12 @@ function onSubmit(e)
         document.body.innerHTML=document.body.innerHTML+'<h4>something went wrong</h4>';
         console.log(err);
     })
-    //localStorage.setItem("userDetails"+emailId, JSON.stringify(myObj));
+   // localStorage.setItem("userDetails"+emailId, JSON.stringify(myObj));
     
     addElement(myObj);
   }
- window.addEventListener('DOMContentLoaded',() =>
+
+  window.addEventListener('DOMContentLoaded',() =>
   {
       axios.get('https://crudcrud.com/api/01a14297515f4156853000a15d2d7aac/appointmentData')
       .then((response) =>
@@ -94,7 +89,8 @@ function addElement(myObj)
     
     document.getElementById("Name").value = myObj.name;
     document.getElementById("email").value = myObj.emailId;
-    li.remove();
+    
+   // li.remove();
   });
   
   li.appendChild(edit);
@@ -104,12 +100,23 @@ function addElement(myObj)
   Delete.value = "Delete";
   Delete.addEventListener("click", () => {
     //localStorage.removeItem("userDetails" + myObj.emailId);
-    li.remove();
-  });
-
+   
+    axios.delete(`https://crudcrud.com/api/01a14297515f4156853000a15d2d7aac/appointmentData/${myObj._id}`)
+    .then((response) => 
+    {
+       
+         li.remove();
+    })
+    .catch((err) =>
+    {
+        document.body.innerHTML=document.body.innerHTML+'<h4>something went wrong</h4>';
+        console.log(err);
+  })
+})
   li.appendChild(Delete);
   ul.appendChild(li);
 }
+ 
   </script>
 </body>
 </html
