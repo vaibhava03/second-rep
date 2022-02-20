@@ -86,27 +86,50 @@ function addElement(myObj)
  var li = document.createElement('li');
  li.appendChild(document.createTextNode(myObj.name+" "+myObj.emailId));
  
+ 
+
   const edit = document.createElement("input");
-  
   edit.type = "button";
   edit.value = "Edit";
-  edit.addEventListener("click", () => {
-    
-    document.getElementById("Name").value = myObj.name;
-    document.getElementById("email").value = myObj.emailId;
-    li.remove();
-  });
   
-  li.appendChild(edit);
-
   const Delete = document.createElement("input");
   Delete.type = "button";
   Delete.value = "Delete";
+
   Delete.addEventListener("click", () => {
     //localStorage.removeItem("userDetails" + myObj.emailId);
-    li.remove();
-  });
+   
+    axios.delete(`https://crudcrud.com/api/18e2acfaacd14383a0301248df1859d1/appointmentData/${myObj._id}`)
+    .then((response) => 
+    {
+       
+         li.remove();
+    })
+    .catch((err) =>
+    {
+        document.body.innerHTML=document.body.innerHTML+'<h4>something went wrong</h4>';
+        console.log(err);
+  })
+})
 
+edit.addEventListener("click", () => {
+    
+    document.getElementById("Name").value = myObj.name;
+    document.getElementById("email").value = myObj.emailId;  
+    axios.delete(`https://crudcrud.com/api/18e2acfaacd14383a0301248df1859d1/appointmentData/${myObj._id}`)
+    .then((response) => 
+    {
+       
+         li.remove();
+    })
+    .catch((err) =>
+    {
+        document.body.innerHTML=document.body.innerHTML+'<h4>something went wrong</h4>';
+        console.log(err);
+  })
+
+});
+  li.appendChild(edit);
   li.appendChild(Delete);
   ul.appendChild(li);
 }
