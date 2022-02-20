@@ -75,11 +75,62 @@ Search(data)
     }
     return curr;
 }
- 
+    
+    preOrderRecursion()
+    {
+    
+    if (this.root===null) {
+        return null;
+    }
+    else{
+      var arr=new Array();
+      function tranversePreOrder(node)
+      {
+        arr.push(node.data);
+        node.left&&tranversePreOrder(node.left);
+        node.right&&tranversePreOrder(node.right);
+      };
+    tranversePreOrder(this.root);
+   return arr
+}
+ }
+
+ preOrderIteration()
+ {
+    let node=this.root;
+    var arr1=new Array();
+     if(node!==null)
+     {
+         arr1.push(node);
+     }
+     else {
+         var arr=new Array();
+         while(arr.length>0)
+         {
+            arr.push(node.data);
+           if(node.right!=null)
+           { 
+               arr1.push(node.right);
+            node=node.left;
+           }
+           if(node.left!=null)
+           { 
+               arr1.push(node.left);
+            node=node.left;
+           }
+           
+         }
+     } return arr;
+ }
 }
 var Tree=new BinarySearchTree;
+
 Tree.insert(8); 
 Tree.insert(4);
 Tree.insert(3);
 Tree.insert(7);
+Tree.insert(9);
 console.log(Tree.Search(3));
+console.log(Tree);
+console.log(Tree.preOrderRecursion());
+console.log(Tree.preOrderIteration());
