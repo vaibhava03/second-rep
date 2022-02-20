@@ -31,11 +31,11 @@
 <script >
   const myForm = document.getElementById("Form");
 
-Object.keys(localStorage).forEach((key) => {
-  stringifiedDetailsOfPeople = localStorage.getItem(key);
-  detailsOfPeople = JSON.parse(stringifiedDetailsOfPeople);
-  addElement(detailsOfPeople);
-  });
+// Object.keys(localStorage).forEach((key) => {
+//   stringifiedDetailsOfPeople = localStorage.getItem(key);
+//   detailsOfPeople = JSON.parse(stringifiedDetailsOfPeople);
+//   addElement(detailsOfPeople);
+//   });
   
   
 myForm.addEventListener('submit',onSubmit);
@@ -65,7 +65,21 @@ function onSubmit(e)
     
     addElement(myObj);
   }
-
+ window.addEventListener('DOMContentLoaded',() =>
+  {
+      axios.get('https://crudcrud.com/api/01a14297515f4156853000a15d2d7aac/appointmentData')
+      .then((response) =>
+      {
+        for(var i=0;i<response.data.length;i++) {  
+            addElement(response.data[i]);
+      }
+    })
+    .catch((error) =>
+        {
+            console.log(error);
+        })
+    
+  })
 function addElement(myObj)
  {
  var ul = document.getElementById("user-details");
