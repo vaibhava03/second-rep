@@ -1,6 +1,5 @@
 const http = require('http');
-// const routes=require('./routes');
-// routes.
+
 const fs=require('fs'); 
 var message=fs.createWriteStream('message.txt');
 const server=http.createServer((req, res) =>
@@ -43,15 +42,3 @@ res.setHeader('Content-Type', 'text/html');
 });
 server.listen(4000);
 
-// if(req.url==='/home')
-//   {
-//       res.write('<p>Welcome Home</p>');
-//   }
-//   if(req.url==='/about')
-//   {
-//       res.write('<p>Welcome to About Us page</p>');
-//   }
-//   if(req.url==='/node')
-//   {
-//       res.write('<p>Welcome to my Node js project</p>');
-//   }
