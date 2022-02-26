@@ -75,38 +75,90 @@ module.exports=router;
 //products.js
 
 const path=require('path');
-const products=[];
+const Product=require('../models/product');
+
 
 exports.getAddProduct=(req, res, next) =>{
     res.sendFile(path.join(__dirname, '../', 'views', 'add-product.html'));
     };
 exports.postAddProduct=(req, res, next) =>{
-    products.push({title:req.body.title});
+   const product=new Product(req.body.title);
+   product.save();
     res.redirect('/');
     };
 
 exports.getProducts=(req, res, next) =>{
-    res.sendFile(path.join(__dirname, '../', 'views', 'shop.html'));
-    };
-exports.getContacts=(req, res, next) =>{
-       
-    res.sendFile(path.join(__dirname,'../', 'views', 'contactUS.html'));
+        const products=Product.fetchAll((products)=>
+        {
+        res.sendFile(path.join(__dirname, '../', 'views', 'shop.html'));
+        });
         };
-        
-exports.postContacts=(req, res, next) =>{
-    console.log(req.body);
-    res.redirect('/success');
+  
+    exports.getContacts=(req, res, next) =>{
+       
+        res.sendFile(path.join(__dirname,'../', 'views', 'contactUS.html'));
+            };
+            
+    exports.postContacts=(req, res, next) =>{
+        console.log(req.body);
+        res.redirect('/success');
+        };
+    
+    exports.getSuccess=(req, res, next) =>
+    {
+        res.sendFile(path.join(__dirname, '../', 'views', 'success.html'));
+    
     };
+    
 
-exports.getSuccess=(req, res, next) =>
-{
-    res.sendFile(path.join(__dirname, '../', 'views', 'success.html'));
-
-};
 exports.getError=(req, res, next) =>
     {
-        res.sendFile(path.join(__dirname,  'views', '404error.html'));
+        res.sendFile(path.join(__dirname, '../', 'views', '404error.html'));
     };
+
+
+
+//product.js---models
+
+const fs=require('fs');
+const path=require('path');
+const p=path.join(path.dirname(require.main.filename), 'data', 'products.json');
+
+const getProductsFromFile=cb =>
+{
+  fs.readFile(p, (fileContent, err) =>
+    {
+      if(err)
+      {
+      return cb([]);
+      }
+      else{
+      cb(JSON.parse(fileContent));
+      }
+    });
+};
+
+module.exports=class Product{
+  constructor(t){
+    this.title=t;
+  }
+  save()
+  {
+    getProductsFromFile(products =>
+      {
+        products.push(this);
+     fs.writeFile(p, JSON.stringify(products), (err) =>
+     {
+       console.log(err);
+     });
+      });
+  }
+  static fetchAll(cb)
+  {
+    getProductsFromFile(cb);
+  }
+};
+
 
 
 
