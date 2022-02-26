@@ -1,24 +1,26 @@
 //app.js
 
-const path=require('path');
+  const path=require('path');
     const express=require('express');
-
     const bodyParser=require('body-parser');
-
     const app=express();
 
+    app.set('view engine', 'pug');
+    app.set('views', 'views');
+    
     const adminRoutes=require('./routes/admin');
     const shopRoutes=require('./routes/shop');
     const contactRoutes=require('./routes/contact');
+    
     app.use(bodyParser.urlencoded({extended:false}));
+
     app.use(express.static(path.join(__dirname,'public')));
+
     app.use(adminRoutes);
     app.use(shopRoutes);
     app.use(contactRoutes);
-    app.use((req, res, next) =>
-    {
-        res.sendFile(path.join(__dirname,  'views', '404error.html'));
-    });
+
+    app.use(productsController.getError);
     
     app.listen(3000);
     
@@ -27,20 +29,15 @@ const path=require('path');
 //admin.js
 
 const path=require('path');
-const express=require('express');
 
-const routeDir=require('../util/path');
+const express=require('express');
+const productsController=require('../controllers/products.js');
+
 const router=express.Router();
 
-router.get('/add-product', (req, res, next) =>{
-       
-res.sendFile(path.join(routeDir, 'views', 'add-product.html'));
-    });
+router.get('/add-product', productsController.getAddProduct);
 
-router.post('/add-product',(req, res, next) =>{
-    console.log(req.body);
-    res.redirect('/');
-    });
+router.post('/add-product',productsController.postAddProduct);
 
 module.exports=router;
 
@@ -51,16 +48,11 @@ module.exports=router;
 const path=require('path');
 const express=require('express');
 
-const routeDir=require('../util/path');
-
+const productsController=require('../controllers/products.js');
 const router=express.Router();
 
-router.get('/', (req, res, next) =>{
-        
-    res.sendFile(path.join(routeDir, 'views', 'shop.html'));
-});
+router.get('/', productsController.getProducts);
     module.exports=router;
-
 
 
 //contact.js
@@ -70,26 +62,57 @@ const express=require('express');
 
 const routeDir=require('../util/path');
 const router=express.Router();
+const productsController=require('../controllers/products.js');
 
-router.get('/contactus', (req, res, next) =>{
-       
-res.sendFile(path.join(routeDir, 'views', 'contactUS.html'));
-    });
+router.get('/contactus', productsController.getContacts);
 
-router.post('/contactus',(req, res, next) =>{
-    console.log(req.body);
-    res.redirect('/success');
-    });
-router.get('/success',(req, res, next) =>
-{
-    res.sendFile(path.join(routeDir, 'views', 'success.html'));
-
-})
+router.post('/contactus',productsController.postContacts);
+router.get('/success',productsController.getSuccess);
 module.exports=router;
 
 
 
+//products.js
+
+const path=require('path');
+const products=[];
+
+exports.getAddProduct=(req, res, next) =>{
+    res.sendFile(path.join(__dirname, '../', 'views', 'add-product.html'));
+    };
+exports.postAddProduct=(req, res, next) =>{
+    products.push({title:req.body.title});
+    res.redirect('/');
+    };
+
+exports.getProducts=(req, res, next) =>{
+    res.sendFile(path.join(__dirname, '../', 'views', 'shop.html'));
+    };
+exports.getContacts=(req, res, next) =>{
+       
+    res.sendFile(path.join(__dirname,'../', 'views', 'contactUS.html'));
+        };
+        
+exports.postContacts=(req, res, next) =>{
+    console.log(req.body);
+    res.redirect('/success');
+    };
+
+exports.getSuccess=(req, res, next) =>
+{
+    res.sendFile(path.join(__dirname, '../', 'views', 'success.html'));
+
+};
+exports.getError=(req, res, next) =>
+    {
+        res.sendFile(path.join(__dirname,  'views', '404error.html'));
+    };
+
+
+
+
 //error404.html
+
 
 <!DOCTYPE html>
 <html lang="en">
